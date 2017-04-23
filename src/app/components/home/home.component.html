@@ -1,0 +1,27 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" *ngIf="visible">
+    <div class="table-container" *ngFor="let table of tables; let i = index">
+      <md-card [ngClass]="{'table-free': table.state==='free', 
+                           'table-busy': table.state==='busy', 
+                           'table-reserved': table.state==='reserved'}" 
+               (click)="cardClicked(i)">
+        <md-card-header>
+          <md-card-title><h3>Table {{table.number}}</h3></md-card-title>
+          <md-card-subtitle><h3>Seats: {{table.seats}}</h3></md-card-subtitle>
+          <md-card-subtitle><h3>State: {{table.state}}</h3></md-card-subtitle>
+        </md-card-header>
+        <md-card-content>
+          <br/><br/><br/>
+        </md-card-content>
+        <!--
+        <md-card-actions align="end">
+          <button md-raised-button color="primary" [hidden]="table.state!=='busy'">Bill</button>
+          <button md-raised-button color="primary" [hidden]="table.state==='busy'">Busy</button>
+        </md-card-actions>
+        -->
+      </md-card>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

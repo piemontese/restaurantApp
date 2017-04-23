@@ -1,9 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { LoginComponent } from './components/login/login.component';
+import { TableDetailComponent } from './components/home/table-detail/table-detail.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+
 const routes: Routes = [
   {
-    path: '',
+    path: '', component: LoginComponent,
+    children: []
+  },
+  {
+    path: 'home', component: HomeComponent,
+    children: [
+      { path: 'table-detail/:id', component: TableDetailComponent }
+    ]
+  },
+  {
+    path: 'about', component: AboutComponent,
+    children: []
+  },
+  {
+    path: 'login', component: LoginComponent,
+    children: []
+  },
+  {
+    path: '**', component: PageNotFoundComponent,
     children: []
   }
 ];

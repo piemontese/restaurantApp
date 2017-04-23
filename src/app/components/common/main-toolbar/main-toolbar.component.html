@@ -1,0 +1,22 @@
+<md-toolbar color="primary" class="fixed-top transparent-background mat-elevation-z10">
+	<md-toolbar-row>
+	  <button md-button [routerLink]="['/home']" routerLinkActive="active" (click)="activeRoute='home'" class="app-home-button" i18n>Tables</button>
+	  <button md-button [routerLink]="['/about']" routerLinkActive="active" (click)="activeRoute='about'" class="about" i18n>About</button>
+	  
+	  <!-- This fills the remaining space of the current row -->
+	  <span class="example-fill-remaining-space"></span>
+    <div class="flex-container" fxLayout="row">
+      <div class="flex-item">
+        <!--
+        <button md-icon-button i18n-mdTooltip mdTooltip="Search" mdTooltipPosition="below" (click)="viewSearch=true"><md-icon>search</md-icon></button>
+        <md-input-container dividerColor="accent" *ngIf="viewSearch">
+          <input mdInput i18n-placeholder placeholder="Search" [(ngModel)]="listFilter" (ngModelChange)="appDataService.setListFilter(listFilter)" autofocus>
+        </md-input-container>
+        <button md-icon-button *ngIf="viewSearch" i18n-mdTooltip mdTooltip="Close search" mdTooltipPosition="below" (click)="viewSearch=!viewSearch; listFilter=''"><md-icon>clear</md-icon></button>
+        -->
+        <button md-icon-button [routerLink]="['/login']" routerLinkActive="active" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below"><md-icon>person</md-icon></button>
+      </div> 
+    </div>
+  </md-toolbar-row>
+</md-toolbar>
+

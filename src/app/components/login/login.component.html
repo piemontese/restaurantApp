@@ -1,0 +1,34 @@
+<!--
+<div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"> 
+  <h2>Please login</h2>
+  <md-input-container>
+    <input mdInput placeholder="User" value="">
+  </md-input-container>
+  <md-input-container>
+    <input mdInput placeholder="Password" type="password" value="">
+  </md-input-container>
+  <button md-button i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below" (click)="login()" i18n>Login</button>
+
+  <div>{{data}}</div>
+</div>
+-->
+<div class="input-container">
+  <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"> 
+    <h2>Please login</h2>
+    <form>
+      <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"> 
+      <div class="input-control">
+        <md-input-container>
+          <input mdInput placeholder="User" id="user" value="" class="form-control" [(ngModel)]="user" name="user">
+        </md-input-container>
+      </div>
+      <div class="input-control">
+        <md-input-container class="input-container">
+          <input mdInput placeholder="Password" type="password" id="password" value="" class="form-control" [(ngModel)]="password" name="password">
+        </md-input-container>
+      </div>
+      <button md-raised-button color="primary" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below" (click)="login()" type="submit" class="input-control" i18n>Login</button>
+      </div>
+    </form>
+  </div>
+</div>
