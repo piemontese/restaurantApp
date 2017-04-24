@@ -3,6 +3,7 @@ import { Http, Response, Headers } from "@angular/http";
 import { Router } from "@angular/router";
 
 import { DataService } from "./data.service";
+import { UserData } from "../data/user-data";
 
 @Injectable()
 export class LoginService {
@@ -11,7 +12,7 @@ export class LoginService {
 
   constructor( private http: Http, private router: Router, private dataService: DataService ) { }
 
-  login( user: string, password: string) { 
+  login( user: string, password: string ) { 
     console.log(user + " " + password);
     let data = [ user, password ];
     let postData = {
@@ -19,13 +20,15 @@ export class LoginService {
         'data': data
       };
     this.http.post(this.url, JSON.stringify(postData) )
-//          .catch(this.handleError)
+      .catch(this.handleError)
           .subscribe( response => { this.data = response.json() },
               () => {},
               () => { console.log(this.data);
                       if ( this.data.errCode === 0 ) {
                         alert( this.data.table[0].userType + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
-                        this.dataService.user.name = this.data.table[0].user;
+                        debugger;
+                        let userData = new UserData( this.data.table[0].user, this.data.table[0].firstName, this.data.table[0].lastName, this.data.table[0].userType );
+                        this.dataService.setUserData( userData );
                         this.router.navigate(['home']); 
                       }
                       else
@@ -37,4 +40,13 @@ export class LoginService {
             };
   }
   
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error);
+    console.log('ERROR');
+    alert(error.message || error);
+    return Promise.reject(error.message || error);
+  }
+      
 }
+
+  

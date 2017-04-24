@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import { User } from "../data/user";
+import { UserData } from "../data/user-data";
 
 @Injectable()
 export class DataService {
-  public user: User;
+  public userData = new UserData( "", "", "", "");
   
-  constructor() { }
+  constructor() {}
+  
+  setUserData( userData: UserData ) {
+    debugger;
+    this.userData = userData;
+  }
+  
+  getUserData(): UserData {
+    debugger;
+    return this.userData;
+  }
 
 }

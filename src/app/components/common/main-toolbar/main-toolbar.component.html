@@ -14,6 +14,7 @@
         </md-input-container>
         <button md-icon-button *ngIf="viewSearch" i18n-mdTooltip mdTooltip="Close search" mdTooltipPosition="below" (click)="viewSearch=!viewSearch; listFilter=''"><md-icon>clear</md-icon></button>
         -->
+        {{ getWelcome() }}
         <button md-icon-button [routerLink]="['/login']" routerLinkActive="active" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below"><md-icon>person</md-icon></button>
       </div> 
     </div>

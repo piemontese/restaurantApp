@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AboutComponent } from './components/about/about.component';
 import { TableDetailComponent } from './components/home/table-detail/table-detail.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { DataService } from "./services/data.service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     FlexLayoutModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

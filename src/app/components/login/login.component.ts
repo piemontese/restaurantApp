@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit, OnDestroy, isDevMode } from '@angular/core';
 import { Http, Response, Headers } from "@angular/http";  
 import { Router } from "@angular/router";
 import { Observable } from "rxjs/Rx";
@@ -6,23 +6,23 @@ import 'rxjs/add/operator/toPromise';
 
 import { LoginService } from "../../services/login.service";
 import { DataService } from "../../services/data.service";
-import { User } from "../../data/user";
+import { UserData } from "../../data/user-data";
 
 @Component({
   selector: 'pie-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [LoginService, DataService]
+  providers: [LoginService/*, DataService*/]
 })
 export class LoginComponent implements OnInit {
   private url = isDevMode() ? "http://localhost/angular2/angular-cli/apps/restaurantApp/src/php/api.php" : "php/api.php";
   private data: any;
-  userData: User;
+  userData: UserData;
   user: string = "";
   password: string = "";
 
 
-  constructor( private loginService: LoginService, private http: Http, private router: Router ) {}
+  constructor( private loginService: LoginService, private http: Http, private router: Router, private dataService: DataService ) {}
 
   getTestData(): Promise<any> {
     let data = [ btoa(this.user), btoa(this.password) ];
@@ -78,5 +78,10 @@ export class LoginComponent implements OnInit {
     
   ngOnInit() {
   }
+
+ ngOnDestroy() {
+   this.user = this.password = "";
+   console.log(this.dataService);
+ }
 
 }

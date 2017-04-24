@@ -3,14 +3,18 @@ import { Router } from '@angular/router';
 
 import { HomeService } from '../../services/home.service';
 
+import { DataService } from "../../services/data.service";
+import { UserData } from "../../data/user-data";
+
 @Component({
   selector: 'pie-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [HomeService]
+  providers: [HomeService/*, DataService*/]
 })
 export class HomeComponent implements OnInit {
   @Input() visible: boolean = true;
+  userData: UserData;
   prices: Array<any>;
   tables: Array<any> = [
     { number: 1, seats: 4, state: 'busy' },
@@ -27,7 +31,7 @@ export class HomeComponent implements OnInit {
     { number: 12, seats: 2, state: 'free' }
   ];
   
-constructor( private router: Router, private homeService: HomeService ) { 
+  constructor( private router: Router, private homeService: HomeService, private dataService: DataService ) { 
   }
 
   cardClicked( id: number ) { 
@@ -38,6 +42,9 @@ constructor( private router: Router, private homeService: HomeService ) {
   }
 
   ngOnInit() {
+    debugger;
+    this.userData = this.dataService.getUserData();
+    console.log(this.dataService);
   }
 
 }
