@@ -10,7 +10,7 @@ import { HomeService } from '../../../services/home.service';
 })
 export class TableDetailComponent implements OnInit {
   private id;
-  private table: any;
+  table: any;
   private sub: any;
   private cssClass: string = "";
   
