@@ -12,11 +12,18 @@ export class MainToolbarComponent implements OnInit {
   constructor( private dataService: DataService ) { }
 
   getWelcome(): string {
-    debugger;
     let welcome = "";
     if ( this.dataService.getUserData().getName() !== ""  )
-      welcome = "Welcome " + this.dataService.getUserData().getFirstName() + " " + this.dataService.getUserData().getLastName() + " ";
+      welcome = "Welcome " + this.dataService.getUserData().getTypeDescription() + " " + this.dataService.getUserData().getFirstName() + " " + this.dataService.getUserData().getLastName() + " ";
     return welcome;
+  }
+  
+  getUserType() {
+    return this.dataService.getUserData().getType();
+  }
+
+  getIsLogged() {
+    return this.dataService.getUserData().getIsLogged();
   }
 
   ngOnInit() {

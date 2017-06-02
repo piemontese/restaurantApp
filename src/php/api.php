@@ -9,10 +9,11 @@ require_once('login.php');
 $data = file_get_contents('php://input');
 $json = json_decode($data);
 $method = $json->{'method'};
+$language = $json->{'language'};
 
-if(isset($method)){
+if(isset($method)) {
 
-    switch($method){
+    switch($method) {
         case "userLogin":
             $user = base64_decode($json->{'data'}[0]);
             $password = base64_decode($json->{'data'}[1]);
@@ -20,9 +21,15 @@ if(isset($method)){
       
             $obj = new Authentication();
             $table = -1;
-            // insert new product
-            $table = $obj->userLogin($user, $password);
-            $resp = array('table' => $table, 'errCode' => $obj->getErrorCode(), 'errMsg' => $obj->getMsg());
+
+            $table = $obj->adminLogin($user, $password, $language);
+            if ( $obj->getErrorCode() === 0 ) 
+                $resp = array('table' => $table, 'errCode' => $obj->getErrorCode(), 'errMsg' => $obj->getMsg());
+            else {
+                $obj1 = new Authentication();
+                $table2 = $obj1->userLogin($user, $password, $language);
+                $resp = array('table' => $table2, 'errCode' => $obj1->getErrorCode(), 'errMsg' => $obj1->getMsg());
+            }
 
             header('Content-Type: application/json');
             header('Access-Control-Allow-Origin: *');

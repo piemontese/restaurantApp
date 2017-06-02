@@ -12,9 +12,15 @@
   <div>{{data}}</div>
 </div>
 -->
+<div class=" container-hv-center">
 <div class="input-container">
   <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"> 
-    <h2>Please login</h2>
+    <md-card class="mat-elevation-z20">
+    <md-card-title>
+    <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
+    Please login
+    </div>
+    </md-card-title>
     <form>
       <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center"> 
       <div class="input-control">
@@ -27,8 +33,14 @@
           <input mdInput placeholder="Password" type="password" id="password" value="" class="form-control" [(ngModel)]="password" name="password">
         </md-input-container>
       </div>
+      <br/>
+      <!--<md-card-actions> -->
       <button md-raised-button color="primary" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below" (click)="login()" type="submit" class="input-control" i18n>Login</button>
+      <!-- </md-card-actions> -->
       </div>
+      <br/>
     </form>
+    </md-card>
   </div>
+</div>
 </div>

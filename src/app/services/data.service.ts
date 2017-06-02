@@ -4,18 +4,20 @@ import { UserData } from "../data/user-data";
 
 @Injectable()
 export class DataService {
-  public userData = new UserData( "", "", "", "");
+  public userData = new UserData( "", "", "", "", false, "");
   
   constructor() {}
   
   setUserData( userData: UserData ) {
-    debugger;
     this.userData = userData;
   }
   
   getUserData(): UserData {
-    debugger;
     return this.userData;
+  }
+  
+  unset() {
+    this.userData.unset();
   }
 
 }

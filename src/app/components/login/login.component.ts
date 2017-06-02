@@ -60,6 +60,7 @@ export class LoginComponent implements OnInit {
     
   login() {
     debugger;
+//    this.dataService.unset();
     this.loginService.login( btoa(this.user), btoa(this.password) );
 //    let promise: Promise<any> = this.getTestData();
 //    console.log(this.data);
@@ -77,11 +78,12 @@ export class LoginComponent implements OnInit {
   }
     
   ngOnInit() {
+    this.dataService.unset();
   }
 
- ngOnDestroy() {
-   this.user = this.password = "";
-   console.log(this.dataService);
- }
+  ngOnDestroy() {
+    this.user = this.password = "";
+    console.log(this.dataService);
+  }
 
 }

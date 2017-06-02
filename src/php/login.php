@@ -1,40 +1,4 @@
 <?php
-/*
-    header('Content-Type: application/json');
-    $user = $_POST["user"] || $_GET["user"]; 
-    $password = $_POST["password"] || $_GET["password"]; 
-
-        // set up the connection variables
-    $dbName  = 'ecommerce';
-    $dbHost = '127.0.0.1';
-    $dbUser = "root";
-    $dbPassword = "root";
-//$user = "vendor";
-//$password ="vendor";
-//echo $user;
-//echo $password;
-
-        // connect to the database
-    $dbh = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
-
-        // a query get all the records from the users table
-    $sql = "SELECT user, user_type, email FROM ecom_users WHERE user='$user' AND password='$password'";
-
-        // use prepared statements, even if not strictly required is good practice
-    $stmt = $dbh->prepare( $sql );
-
-        // execute the query
-    $stmt->execute();
-
-        // fetch the results into an array
-    $result = $stmt->fetchAll( PDO::FETCH_ASSOC );
-
-        // convert to json
-    $json = json_encode( $result );
-
-        // echo the json string
-    echo $json;
-*/
 
 class Authentication {
     private $dbserver = "localhost";
@@ -55,28 +19,33 @@ class Authentication {
         return $this->msg;
     }
 
-    public function userLogin($user, $password)
+    public function adminLogin( $user, $password, $language )
     {
         $auth = array();
+        $this->errorCode = 0;
+        $this->msg = "";
         try {
-            $mysqli = new mysqli($this->dbserver, $this->dbuser, $this->dbpass, $this->authDatabase);
+            $mysqli = new mysqli($this->dbserver, $this->dbuser, $this->dbpass);
             if ($mysqli->connect_errno) {
                 $this->errorCode = $mysqli->connect_errno;
                 $this->msg = $mysqli->error;
                 return $auth;
             }
-            $query = "select user,userType,firstName,lastName,email from Users where user=? and password=?";
-//            $query = "select user,user_type,email from ecom_users where user=? and user_type=? and password=?";
+            $query = "select auth.Users.user, auth.Users.userType, auth.Users.firstName, auth.Users.lastName,     auth.Users.email, auth.UserTypeDescription.description as userTypeDescription 
+            from auth.Users 
+            left join auth.UserTypeDescription on auth.UserTypeDescription.type = auth.Users.userType 
+            where auth.Users.user=? 
+            and auth.Users.password=? 
+            and auth.UserTypeDescription.language=?";
             
             if (!($stmt = $mysqli->prepare($query))) {
                 $mysqli->close();
                 $this->errorCode = 999;
                 $this->msg = "prepare " . $mysqli->error;
                 return $auth;
-            }           
-            //$values = array($user, $userType, $password);
-            //call_user_func_array(array($stmt,'bind_param'), $values);
-            $stmt->bind_param('ss', $user, $password);
+            }        
+          
+            $stmt->bind_param('sss', $user, $password, $language);
           
             if (!$stmt->execute()) {
                 $mysqli->close();
@@ -84,10 +53,9 @@ class Authentication {
                 $this->msg = "execute " . $stmt->error;
                 return $auth;
             } else {
-                $stmt->bind_result($user,$user_type,$firstName,$lastName,$email);
+                $stmt->bind_result($user, $userType, $firstName, $lastName, $email, $userTypeDescription);
                 while ($stmt->fetch()) {
-//                    $price_string = number_format((float)$price, 2, '.', '');
-                    array_push($auth, array("user"=>$user, "userType"=>$user_type, "firstName"=>$firstName, "lastName"=>$lastName, "email"=>$email));
+                    array_push($auth, array("user"=>$user, "userType"=>$userType, "firstName"=>$firstName, "lastName"=>$lastName, "email"=>$email, "userTypeDescription"=>$userTypeDescription));
                 }
 
             }   
@@ -106,6 +74,61 @@ class Authentication {
 
         return $auth;
     }
+
+    public function userLogin( $user, $password, $language )
+    {
+        $auth = array();
+        try {
+            $mysqli = new mysqli($this->dbserver, $this->dbuser, $this->dbpass);
+            if ($mysqli->connect_errno) {
+                $this->errorCode = $mysqli->connect_errno;
+                $this->msg = $mysqli->error;
+                return $auth;
+            }
+            $query = "select restaurant.Users.user, restaurant.Users.userType, restaurant.Users.firstName, restaurant.Users.lastName, restaurant.Users.email, restaurant.Users.isLogged, restaurant.UserTypeDescription.description as userTypeDescription 
+            from restaurant.Users 
+            left join restaurant.UserTypeDescription on restaurant.UserTypeDescription.type = restaurant.Users.userType 
+            where restaurant.Users.user=? 
+            and restaurant.Users.password=? 
+            and restaurant.UserTypeDescription.language=?";
+            
+            if (!($stmt = $mysqli->prepare($query))) {
+                $mysqli->close();
+                $this->errorCode = 999;
+                $this->msg = "prepare " . $mysqli->error;
+                return $auth;
+            }        
+          
+            $stmt->bind_param('sss', $user, $password, $language);
+          
+            if (!$stmt->execute()) {
+                $mysqli->close();
+                $this->errorCode = 999;
+                $this->msg = "execute " . $stmt->error;
+                return $auth;
+            } else {
+                $stmt->bind_result($user, $userType, $firstName, $lastName, $email, $isLogged, $userTypeDescription);
+                while ($stmt->fetch()) {
+                    array_push($auth, array("user"=>$user, "userType"=>$userType, "firstName"=>$firstName, "lastName"=>$lastName, "email"=>$email, "isLogged"=>$isLogged, "userTypeDescription"=>$userTypeDescription));
+                }
+
+            }   
+
+            $stmt->close();
+            $mysqli->close();
+            
+            if (count($auth) == 0 ) {
+                $this->errorCode = 999;
+                $this->msg = "Utente o password errati";
+            }
+        } catch (Exception $e) {
+            $this->errorCode = 999;
+            $this->msg = $e->getMessage();
+        }
+
+        return $auth;
+    }
+
     public function userRegister($name,$price)
     {
         $userRegister = -1;
@@ -142,6 +165,7 @@ class Authentication {
 
         return $userRegister;
     }
+  
     public function userUpdate($id,$name,$price)
     {
         $userUpdate = -1;
@@ -179,6 +203,7 @@ class Authentication {
 
         return $userUpdate;
     }
+
     public function userDelete($id)
     {
         $userDelete = -1;

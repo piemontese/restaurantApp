@@ -40,3 +40,24 @@ md-toolbar {
   flex: 1 1 auto;
 }
 
+.container-h-center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.container-v-center {
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.container-hv-center {
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

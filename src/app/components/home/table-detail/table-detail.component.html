@@ -1,11 +1,10 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-  <div fxLayout="row">
+<div fxLayout="column" 
+     fxLayoutAlign="center center"
+     [ngClass]="{'table-free': table.state==='free', 
+                 'table-busy': table.state==='busy', 
+                 'table-reserved': table.state==='reserved'}"
+     style="width:100%; height:100%">
+  <div flex-item>
     <h1>Table {{ table.number }}</h1>
   </div>
-  <div fxLayout="row">
-    <h2>Seats {{ table.seats }}</h2>
-  </div>
-  <div fxLayout="row">
-    <h2>State {{ table.state }}</h2>
-  <div>
 </div>  

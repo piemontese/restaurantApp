@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { TableDetailComponent } from './components/home/table-detail/table-detail.component';
+import { AdminComponent } from './components/admin/admin.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -16,6 +17,12 @@ const routes: Routes = [
     path: 'home', component: HomeComponent,
     children: [
       { path: 'table-detail/:id', component: TableDetailComponent }
+    ]
+  },
+  {
+    path: 'admin', component: AdminComponent,
+    children: [
+//      { path: 'dashboard', component: DashboardComponent }
     ]
   },
   {

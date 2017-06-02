@@ -17,6 +17,7 @@ export class LoginService {
     let data = [ user, password ];
     let postData = {
         'method': 'userLogin',
+        'language': 'en',
         'data': data
       };
     this.http.post(this.url, JSON.stringify(postData) )
@@ -25,11 +26,22 @@ export class LoginService {
               () => {},
               () => { console.log(this.data);
                       if ( this.data.errCode === 0 ) {
-                        alert( this.data.table[0].userType + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
-                        debugger;
-                        let userData = new UserData( this.data.table[0].user, this.data.table[0].firstName, this.data.table[0].lastName, this.data.table[0].userType );
+                        alert( this.data.table[0].userType + " - " + this.data.table[0].userTypeDescription + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
+
+                        let userData = new UserData( this.data.table[0].user, this.data.table[0].firstName, this.data.table[0].lastName, this.data.table[0].userType, this.data.table[0].isLogged, this.data.table[0].userTypeDescription );
                         this.dataService.setUserData( userData );
-                        this.router.navigate(['home']); 
+                        switch ( this.data.table[0].userType ) {
+                            case "GLOBAL_ADMIN":
+                            case "LOCAL_ADMIN":
+                              this.router.navigate(['admin']); 
+                              break;
+                            case "WAITER":
+                              this.router.navigate(['home']); 
+                              break;
+                            default:
+//                              this.router.navigate(['home']); 
+                              break;
+                        }; 
                       }
                       else
                         alert(this.data.errMsg);
