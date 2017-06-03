@@ -1,6 +1,7 @@
-import { Component, OnInit, OnDestroy, isDevMode } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, isDevMode } from '@angular/core';
 import { Http, Response, Headers } from "@angular/http";  
 import { Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from "rxjs/Rx";
 import 'rxjs/add/operator/toPromise';
 
@@ -15,6 +16,7 @@ import { UserData } from "../../data/user-data";
   providers: [LoginService/*, DataService*/]
 })
 export class LoginComponent implements OnInit {
+  form: FormGroup;
   private url = isDevMode() ? "http://localhost/angular2/angular-cli/apps/restaurantApp/src/php/api.php" : "php/api.php";
   private data: any;
   userData: UserData;
@@ -22,7 +24,14 @@ export class LoginComponent implements OnInit {
   password: string = "";
 
 
-  constructor( private loginService: LoginService, private http: Http, private router: Router, private dataService: DataService ) {}
+  constructor( @Inject(FormBuilder) fb: FormBuilder, private loginService: LoginService, private http: Http, private router: Router, private dataService: DataService ) {
+    this.form = fb.group({
+      name: fb.group({
+        user: ['', [Validators.required, Validators.minLength(4)]],
+        password: ['', [Validators.required, Validators.minLength(4)]],
+      }),
+    });
+  }
 
   getTestData(): Promise<any> {
     let data = [ btoa(this.user), btoa(this.password) ];
