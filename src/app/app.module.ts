@@ -18,6 +18,7 @@ import { TableDetailComponent } from './components/home/table-detail/table-detai
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { DataService } from "./services/data.service";
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AdminComponent } from './components/admin/admin.component';
     AboutComponent,
     TableDetailComponent,
     PageNotFoundComponent,
-    AdminComponent
+    AdminComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,

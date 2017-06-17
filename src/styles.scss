@@ -10,7 +10,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
-$my-app-primary: mat-palette($mat-yellow, A100, A200, A400);
+$my-app-primary: mat-palette($mat-green);//, A400);//, A200, A400);
 $my-app-accent: mat-palette($mat-amber);
 $my-app-warn: mat-palette($mat-red);
 
@@ -24,7 +24,7 @@ $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
 
 html, body { 
 	margin-top: 75px;
-  background-color: rgb(255,255,220);
+  background-color: rgb(200,240,200);
   padding: 0 5px 0 5px;
   font-family: Roboto;
   width: 100%;

@@ -6,8 +6,12 @@
       <button md-button [routerLink]="['/about']" routerLinkActive="active" (click)="activeRoute='about'" class="about" i18n>About</button>
     </div>
     <div *ngIf="getUserType()==='LOCAL_ADMIN'">
+      <button md-button [routerLink]="['/admin/admin-users']" routerLinkActive="active" (click)="activeRoute='/admin-users'" class="app-home-button" i18n>Users</button>
       <button md-button [routerLink]="['/tables']" routerLinkActive="active" (click)="activeRoute='tables'" class="app-home-button" i18n>Tables</button>
       <button md-button [routerLink]="['/dishes']" routerLinkActive="active" (click)="activeRoute='dishes'" class="about" i18n>Dishes</button>
+    </div>
+    <div *ngIf="getUserType()==='GLOBAL_ADMIN'">
+      <button md-button [routerLink]="['/admin/admin-users']" routerLinkActive="active" (click)="activeRoute='/admin-users'" class="app-home-button" i18n>Users</button>
     </div>
 	  
 	  <!-- This fills the remaining space of the current row -->

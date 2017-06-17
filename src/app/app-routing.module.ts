@@ -6,6 +6,7 @@ import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { TableDetailComponent } from './components/home/table-detail/table-detail.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
   {
     path: 'admin', component: AdminComponent,
     children: [
-//      { path: 'dashboard', component: DashboardComponent }
+      { path: 'admin-users', component: AdminUsersComponent }
     ]
   },
   {
