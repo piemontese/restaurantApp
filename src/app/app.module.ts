@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CdkTableModule } from '@angular/cdk';
+import { MdDialogModule, MdButtonModule  } from '@angular/material';
 import 'hammerjs';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +21,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { DataService } from "./services/data.service";
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { ConfirmDialogComponent } from './components/common/confirm-dialog/confirm-dialog.component';
+import { DialogService } from './services/dialog.service';
+import { DetailDialogComponent } from './components/common/detail-dialog/detail-dialog.component';
+import { DetailDialogService } from './services/detail-dialog.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,9 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
     TableDetailComponent,
     PageNotFoundComponent,
     AdminComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    ConfirmDialogComponent,
+    DetailDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,18 +50,29 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
     JsonpModule,
     MaterialModule,
     FlexLayoutModule,
+    CdkTableModule,
+    MdDialogModule,
     AppRoutingModule
   ],
-  /*
   exports: [
+    ConfirmDialogComponent,
+    DetailDialogComponent,
+/*
     CommonModule,
     FormsModule,
     ReactiveFormsModule
+*/
   ],
-  */
   providers: [
-    DataService
+    DataService,
+    DialogService,
+    DetailDialogService
+  ],
+  entryComponents: [
+    ConfirmDialogComponent,
+    DetailDialogComponent
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+  

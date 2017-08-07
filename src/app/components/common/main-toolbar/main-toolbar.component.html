@@ -1,21 +1,29 @@
 <md-toolbar color="primary" class="fixed-top transparent-background mat-elevation-z10"
             *ngIf="getUserType()">
 	<md-toolbar-row>
-    <div *ngIf="getUserType()==='EMPLOYEE'">
-      <button md-button [routerLink]="['/home']" routerLinkActive="active" (click)="activeRoute='home'" class="app-home-button" i18n>Tables</button>
-      <button md-button [routerLink]="['/about']" routerLinkActive="active" (click)="activeRoute='about'" class="about" i18n>About</button>
+    <div *ngIf="getUserType()==='WAITER'">
+      <button md-button [routerLink]="['/home']" routerLinkActive="router-link-active" (click)="activeRoute='home'" class="app-home-button" i18n>Tables</button>
+      <button md-button [routerLink]="['/about']" routerLinkActive="router-link-active" (click)="activeRoute='about'" class="about" i18n>About</button>
     </div>
     <div *ngIf="getUserType()==='LOCAL_ADMIN'">
-      <button md-button [routerLink]="['/admin/admin-users']" routerLinkActive="active" (click)="activeRoute='/admin-users'" class="app-home-button" i18n>Users</button>
-      <button md-button [routerLink]="['/tables']" routerLinkActive="active" (click)="activeRoute='tables'" class="app-home-button" i18n>Tables</button>
-      <button md-button [routerLink]="['/dishes']" routerLinkActive="active" (click)="activeRoute='dishes'" class="about" i18n>Dishes</button>
+      <button md-button 
+              [routerLink]="['/admin/admin-users']" 
+              multiSelection="true"
+              routerLinkActive="router-link-active" 
+              (click)="activeRoute='/admin-users'" 
+              class="app-home-button" i18n>Users</button>
+      <button md-button [routerLink]="['/tables']" 
+              routerLinkActive="router-link-active" 
+              (click)="activeRoute='tables'" 
+              class="app-home-button" i18n>Tables</button>
+      <button md-button [routerLink]="['/dishes']" routerLinkActive="router-link-active" (click)="activeRoute='dishes'" class="about" i18n>Dishes</button>
     </div>
     <div *ngIf="getUserType()==='GLOBAL_ADMIN'">
-      <button md-button [routerLink]="['/admin/admin-users']" routerLinkActive="active" (click)="activeRoute='/admin-users'" class="app-home-button" i18n>Users</button>
+      <button md-button [routerLink]="['/admin/admin-users']" routerLinkActive="router-link-active" (click)="activeRoute='/admin-users'" class="app-home-button" i18n>Users</button>
     </div>
 	  
 	  <!-- This fills the remaining space of the current row -->
-	  <span class="example-fill-remaining-space"></span>
+	  <span class="right-spacer"></span>
     <div class="flex-container" fxLayout="row">
       <div class="flex-item">
         <!--
@@ -26,7 +34,7 @@
         <button md-icon-button *ngIf="viewSearch" i18n-mdTooltip mdTooltip="Close search" mdTooltipPosition="below" (click)="viewSearch=!viewSearch; listFilter=''"><md-icon>clear</md-icon></button>
         -->
         <span class="welcome-message">{{ getWelcome() }}</span>
-        <button md-icon-button [routerLink]="['/login']" routerLinkActive="active" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below"><md-icon>person</md-icon></button>
+        <button md-icon-button [routerLink]="['/login']" routerLinkActive="router-link-active" i18n-mdTooltip mdTooltip="Login" mdTooltipPosition="below"><md-icon>person</md-icon></button>
       </div> 
     </div>
   </md-toolbar-row>

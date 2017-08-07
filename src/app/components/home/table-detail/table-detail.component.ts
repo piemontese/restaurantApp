@@ -10,6 +10,7 @@ import { HomeService } from '../../../services/home.service';
 })
 export class TableDetailComponent implements OnInit {
   private id;
+  private idSeat;
   table: any;
   private sub: any;
   private cssClass: string = "";
@@ -19,10 +20,10 @@ export class TableDetailComponent implements OnInit {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
        this.id = +params['id']; // (+) converts string 'id' to a number
+       this.idSeat = +params['idSeat']; // (+) converts string 'id' to a number
     });
     this.table = this.homeService.get();
     let body = document.getElementsByTagName('body')[0];
-    debugger;
     switch ( this.table.state ) {
       case 'free':
         this.cssClass = 'table-free';

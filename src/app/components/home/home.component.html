@@ -1,17 +1,60 @@
  <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center" *ngIf="visible">
    <div class="table-container" *ngFor="let table of tables; let i = index">
-     <md-card [ngClass]="{'table-free': table.state==='free', 
+     <!--
+     <md-card (click)="cardClicked(i)" 
+     -->
+     <md-card (mouseover)="table.hover='mat-elevation-z24'"
+              (mouseout)="table.hover=''"
+              [class]="table.hover">
+      <!--
+              class="mat-elevation-z15">
+      -->
+       <md-card-header [ngClass]="{'table-free': table.state==='free', 
                           'table-busy': table.state==='busy', 
-                          'table-reserved': table.state==='reserved'}" 
-              (click)="cardClicked(i)" 
-              class="mat-elevation-z20">
-       <md-card-header>
+                          'table-reserved': table.state==='reserved'}">
          <md-card-title><h3>Table {{table.number}}</h3></md-card-title>
+         <!--
          <md-card-subtitle><h3>Seats: {{table.seats}}</h3></md-card-subtitle>
          <md-card-subtitle><h3>State: {{table.state}}</h3></md-card-subtitle>
+         -->
        </md-card-header>
        <md-card-content>
+         <br/>
+         <!--
+         <h4>Seats: {{table.seats}}</h4>
+         -->  
+         <button md-fab color="accent"
+                 [disabled]="table.enabled===false || table.Seats[table.Seats.length-1].busy===true"
+                 (click)="addSeat(i)" 
+                 i18n-mdTooltip mdTooltip="Add" mdTooltipPosition="below"><md-icon>add</md-icon></button>
+         <button md-fab color="warn" 
+                 [disabled]="table.enabled===false || table.Seats[0].busy===false"
+                 (click)="removeSeat(i)" 
+                 i18n-mdTooltip mdTooltip="Remove" mdTooltipPosition="below"><md-icon>remove</md-icon></button>
+         <!--
+                 [routerLink]="['/login']" 
+                 routerLinkActive="router-link-active" 
+         -->
+         <md-slide-toggle color="primary"
+                          (click)="enable(i)"></md-slide-toggle>
+
+         
+         <div class="seats-container">
+           <span *ngFor="let seat of table.Seats; let j = index">
+             <button *ngIf="seat.busy"
+                     md-mini-fab color="primary"
+                     (click)="cardClicked(i, j)"
+                     i18n-mdTooltip mdTooltip="Seat" mdTooltipPosition="below">{{seat.number}}</button>
+             <button *ngIf="!seat.busy" [disabled]="true"
+                     md-mini-fab color="primary"
+                     [routerLink]="['/login']" 
+                     routerLinkActive="router-link-active" 
+                     i18n-mdTooltip mdTooltip="Seat" mdTooltipPosition="below">{{seat.number}}</button>
+           </span>
+         </div>
+         <!--
          <br/><br/><br/>
+         -->
        </md-card-content>
        <!--
        <md-card-actions align="end">

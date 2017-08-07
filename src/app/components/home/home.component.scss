@@ -13,21 +13,25 @@
 }
 
 .table-free {
-  background-color: rgb(100,165,0);
+  background-color: #4CAF50;  //rgb(100,165,0);
 }
 
 .table-busy {
-  background-color: rgb(255,165,0);
+  background-color: #FFEB3B;  //rgb(255,165,0);
 }
 
 .table-reserved {
-  background-color: rgb(255,75,75);
+  background-color: #F44336;  //rgb(255,75,75);
 }
 
 md-card:hover {
 //  background-color: rgb(255,255,180);
-  cursor: pointer;
-  opacity: 0.5;
+//  cursor: pointer;
+//  opacity: 0.5;
+}
+
+.seats-container {
+  margin-top: 20px;
 }
 
 [hidden] {

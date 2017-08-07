@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, OnDestroy, isDevMode } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy, isDevMode, Directive, ElementRef, Renderer } from '@angular/core';
 import { Http, Response, Headers } from "@angular/http";  
 import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
                       this.user = "";
                       this.password = "";
                       if ( this.data.errCode === 0 ) {
-                        alert( this.data.table[0].userType + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
+                        //alert( this.data.table[0].userType + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
                         this.router.navigate(['home']); 
                       }
                       else
@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit {
   }
     
   login() {
-    debugger;
 //    this.dataService.unset();
     this.loginService.login( btoa(this.user), btoa(this.password) );
 //    let promise: Promise<any> = this.getTestData();
@@ -95,4 +94,24 @@ export class LoginComponent implements OnInit {
     console.log(this.dataService);
   }
 
+}
+
+@Directive({
+    selector: '[autofocus]'
+})
+export class Autofocus
+{
+    constructor(private el: ElementRef, private renderer: Renderer)
+    {        
+    }
+
+    ngOnInit()
+    {        
+      debugger;
+    }
+
+    ngAfterViewInit()
+    {
+        this.renderer.invokeElementMethod(this.el.nativeElement, 'focus', []);
+    }
 }

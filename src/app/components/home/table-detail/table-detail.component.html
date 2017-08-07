@@ -1,3 +1,4 @@
+<!--
 <div fxLayout="column" 
      fxLayoutAlign="center center"
      [ngClass]="{'table-free': table.state==='free', 
@@ -8,3 +9,25 @@
     <h1>Table {{ table.number }}</h1>
   </div>
 </div>  
+-->
+
+
+
+
+<md-grid-list cols="5" rowHeight="5:1">
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile><h1>Table {{ table.number }}</h1></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+</md-grid-list>
+
+<md-grid-list cols="5" rowHeight="5:1">
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile><h3>Seat {{ table.number }}</h3></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+  <md-grid-tile></md-grid-tile>
+</md-grid-list>
+
+

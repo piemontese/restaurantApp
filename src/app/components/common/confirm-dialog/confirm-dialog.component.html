@@ -1,0 +1,18 @@
+
+<span>
+  <h2 md-dialog-title><!--<md-icon color="warn">warning</md-icon>--> {{ title }}</h2>
+</span>
+<md-dialog-content>{{ message }}</md-dialog-content>
+<md-dialog-actions>
+  <span class="right-spacer"></span>
+  <button type="button" 
+          md-raised-button 
+          class="dialog-button"
+          color = "primary"
+          (click)="dialogRef.close(true)">OK</button>
+  <button type="button"
+          md-raised-button 
+          class="dialog-button"
+          color = "warn"
+          (click)="dialogRef.close()">Cancel</button>
+</md-dialog-actions>
