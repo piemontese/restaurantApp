@@ -13,8 +13,8 @@ export class TableDetailComponent implements OnInit {
   private idSeat;
   table: any;
   private sub: any;
-  private cssClass: string = "";
-  
+  private cssClass = '';
+
   constructor( private route: ActivatedRoute, private homeService: HomeService ) { }
 
   ngOnInit() {
@@ -23,7 +23,7 @@ export class TableDetailComponent implements OnInit {
        this.idSeat = +params['idSeat']; // (+) converts string 'id' to a number
     });
     this.table = this.homeService.get();
-    let body = document.getElementsByTagName('body')[0];
+    const body = document.getElementsByTagName('body')[0];
     switch ( this.table.state ) {
       case 'free':
         this.cssClass = 'table-free';

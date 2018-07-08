@@ -1,5 +1,11 @@
- <div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center" *ngIf="visible">
+ <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap="wrap" fxLayoutAlign="center center" *ngIf="visible">
+<!--
    <div class="table-container" *ngFor="let table of tables; let i = index">
+-->
+   <div [ngClass]="['table-container', 'mobile-table-container']"
+        [ngClass.gt-xs]="{'table-container': true}"
+        [ngClass.xs]="{'mobile-table-container': true}"
+        *ngFor="let table of tables; let i = index">
      <!--
      <md-card (click)="cardClicked(i)" 
      -->

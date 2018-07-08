@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 import { HomeService } from '../../services/home.service';
 
-import { DataService } from "../../services/data.service";
-import { UserData } from "../../data/user-data";
+import { DataService } from '../../services/data.service';
+import { UserData } from '../../data/user-data';
 
 @Component({
   selector: 'pie-home',
@@ -13,7 +13,7 @@ import { UserData } from "../../data/user-data";
   providers: [HomeService/*, DataService*/]
 })
 export class HomeComponent implements OnInit {
-  @Input() visible: boolean = true;
+  @Input() visible = true;
   userData: UserData;
   prices: Array<any>;
 /*
@@ -76,12 +76,12 @@ export class HomeComponent implements OnInit {
     { number: 12, seats: 2, state: 'free', hover: '', enabled: false, Seats: [ { number: 1, busy: false },
                                                                { number: 2, busy: false }] }
   ];
-  
-  constructor( private router: Router, private homeService: HomeService, private dataService: DataService ) { 
+
+  constructor( private router: Router, private homeService: HomeService, private dataService: DataService ) {
   }
 
-  cardClicked( id: number, idSeat: number ) { 
-    console.log("Clicked table " + (id + 1));
+  cardClicked( id: number, idSeat: number ) {
+    console.log('Clicked table ' + (id + 1));
     this.visible = false;
 //    this.router.navigate(['/home/table-detail', {id, idSeat}]);
     this.router.navigate(['/home/table-detail', id]);
@@ -89,12 +89,11 @@ export class HomeComponent implements OnInit {
   }
 
   addSeat( i: number) {
-    for( let j=0; j<this.tables[i].Seats.length; j++ ) {
-      if( this.tables[i].state === 'reserved' ) {
+    for ( let j = 0; j < this.tables[i].Seats.length; j++ ) {
+      if ( this.tables[i].state === 'reserved' ) {
         break;
-      }
-      else {
-        if( this.tables[i].Seats[j].busy === false ) {
+      } else {
+        if ( this.tables[i].Seats[j].busy === false ) {
           this.tables[i].Seats[j].busy = true;
           break;
         }
@@ -105,11 +104,13 @@ export class HomeComponent implements OnInit {
   }
 
   removeSeat( i: number ) {
-    for( let j=this.tables[i].Seats.length-1; j>=0; j-- ) {
-      if( this.tables[i].Seats[j].busy === true ) {
+    for ( let j = this.tables[i].Seats.length - 1; j >= 0; j-- ) {
+      if ( this.tables[i].Seats[j].busy === true ) {
         this.tables[i].Seats[j].busy = false;
-        if( j === 0 ) this.tables[i].state = 'free';
-        break;
+        if ( j === 0 ) {
+          this.tables[i].state = 'free';
+          break;
+        }
       }
     }
     console.log(this.tables[i]);
@@ -119,7 +120,7 @@ export class HomeComponent implements OnInit {
     this.tables[i].enabled = !this.tables[i].enabled;
     console.log(this.tables[i].enabled);
   }
-  
+
   ngOnInit() {
     this.userData = this.dataService.getUserData();
     console.log(this.dataService);

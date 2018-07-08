@@ -1,11 +1,11 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 import { MdPaginator } from '@angular/material';
 import { MdSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { DataService } from "../../../services/data.service";
+import { DataService } from '../../../services/data.service';
 import { DialogService } from '../../../services/dialog.service';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/observable/merge';
@@ -31,16 +31,16 @@ export class AdminUsersComponent implements OnInit {
   dataSource: ExampleDataSource | null;
 //  dataSource: DataService | null;
   public resultDialog: any;
-  
+
   @ViewChild(MdPaginator) paginator: MdPaginator;
 
   constructor( private dataService: DataService, private dialogService: DialogService ) { }
 
   selectItem( row: UserData ) {
-    if( !this.multiSelection) {
-      //debugger;
-      //let data: UserData[] = this.dataSource._exampleDatabase.get();
-      for( let i=0; i<this.dataSource._exampleDatabase.data.length; i++ ) {
+    if ( !this.multiSelection) {
+      // debugger;
+      // let data: UserData[] = this.dataSource._exampleDatabase.get();
+      for ( let i = 0; i < this.dataSource._exampleDatabase.data.length; i++ ) {
         this.exampleDatabase.data[i].selected = false;
       }
     }
@@ -48,18 +48,18 @@ export class AdminUsersComponent implements OnInit {
     console.log('row: ', row);
   }
 
-  public openDialog( title:string, message:string  ) {
+  public openDialog( title: string, message: string  ) {
     this.dialogService
   //    .confirm('Confirm Dialog', 'Are you sure you want to do this?')
       .confirm(title, message)
       .subscribe(res => this.resultDialog = res);
   }
-  
+
   getSelectedRow() {
   }
 
   ngOnInit() {
-    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator);    
+    this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator);
 //    this.dataSource = new ExampleDataSource(this.dataService.getUserData(), this.paginator);
     console.log('multiSelection: ', this.multiSelection);
   }

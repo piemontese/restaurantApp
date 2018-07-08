@@ -1,6 +1,6 @@
 <?php
 
-require_once('mysqliQuery.php');
+//require_once('mysqliQuery.php');
 
 class ApiBase {
     protected $dbserver = "localhost";
@@ -10,7 +10,7 @@ class ApiBase {
 //    private $authDatabase = "auth";
     protected $errorCode = 0;
     protected $msg = "";
-
+      
     public function getErrorCode()
     {
         return $this->errorCode;

@@ -1,13 +1,13 @@
 import { Component, Inject, OnInit, OnDestroy, isDevMode, Directive, ElementRef, Renderer } from '@angular/core';
-import { Http, Response, Headers } from "@angular/http";  
-import { Router } from "@angular/router";
+import { Http, Response, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from "rxjs/Rx";
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
-import { LoginService } from "../../services/login.service";
-import { DataService } from "../../services/data.service";
-import { UserData } from "../../data/user-data";
+import { LoginService } from '../../services/login.service';
+import { DataService } from '../../services/data.service';
+import { UserData } from '../../data/user-data';
 
 @Component({
   selector: 'pie-login',
@@ -17,11 +17,11 @@ import { UserData } from "../../data/user-data";
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  private url = isDevMode() ? "http://localhost/angular2/angular-cli/apps/restaurantApp/src/php/api.php" : "php/api.php";
+  private url = isDevMode() ? 'http://localhost/angular2/angular-cli/apps/restaurantApp/src/php/api.php' : 'php/api.php';
   private data: any;
   userData: UserData;
-  user: string = "";
-  password: string = "";
+  user = '';
+  password = '';
 
 
   constructor( @Inject(FormBuilder) fb: FormBuilder, private loginService: LoginService, private http: Http, private router: Router, private dataService: DataService ) {
@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
   }
 
   getTestData(): Promise<any> {
-    let data = [ btoa(this.user), btoa(this.password) ];
-    let postData = {
+    const data = [ btoa(this.user), btoa(this.password) ];
+    const postData = {
         'method': 'userLogin',
         'data': data
       };
@@ -49,14 +49,14 @@ export class LoginComponent implements OnInit {
                       this.password = "";
                       if ( this.data.errCode === 0 ) {
                         //alert( this.data.table[0].userType + " - " + this.data.table[0].user + " - " + this.data.table[0].firstName + " " + this.data.table[0].lastName );
-                        this.router.navigate(['home']); 
+                        this.router.navigate(['home']);
                       }
                       else
                         alert(this.data.errMsg);
                       return this.data;
                     }
-            ),  (errorResponse: any) => { 
-                console.log('timeout error') 
+            ),  (errorResponse: any) => {
+                console.log('timeout error')
             };
     */
 
@@ -84,29 +84,30 @@ export class LoginComponent implements OnInit {
     console.log('ERROR');
     return Promise.reject(error.message || error);
   }
-    
+
   ngOnInit() {
     this.dataService.unset();
   }
 
   ngOnDestroy() {
-    this.user = this.password = "";
+    this.user = this.password = '';
     console.log(this.dataService);
   }
 
 }
 
+/*
 @Directive({
     selector: '[autofocus]'
 })
 export class Autofocus
 {
     constructor(private el: ElementRef, private renderer: Renderer)
-    {        
+    {
     }
 
     ngOnInit()
-    {        
+    {
       debugger;
     }
 
@@ -115,3 +116,4 @@ export class Autofocus
         this.renderer.invokeElementMethod(this.el.nativeElement, 'focus', []);
     }
 }
+*/

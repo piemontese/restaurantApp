@@ -25,48 +25,29 @@ class MysqliQuery extends ApiBase {
             $bindParams = array();
             $count = 0;
             foreach ($params as $param) {
-//            for( $i=0; $i<count($params); $i++) {
                 switch( gettype($param) ) {
                     case "string":
                         $param_type .= 's';
-//                        array_push($bindParams, 's');
                         break;
                     case "integer":
                         $param_type .= 'i';
-//                        array_push($bindParams, 'i');
                         break;
                     case "double":
                         $param_type .= 'd';
-//                        array_push($bindParams, 'd');
                         break;
                     case "blob":
                         $param_type .= 'b';
-//                        array_push($bindParams, 'b');
                         break;
                 }
-//                array_push($bindParams, $param);
             }
-                        array_push($bindParams, $param_type);
+            array_push($bindParams, $param_type);
             foreach ($params as $param) {
               array_push($bindParams, $param);
             }
 
-          /*
-            $evalStr = '$stmt->bind_param("' . $param_type . '"';
-            for( $i=0; $i<count($params); $i++) {
-                $evalStr .=  ',' . '$params[' . $i . ']' . '';
-            }
-            $evalStr .= ');';
-//            return $evalStr;
-//          echo '<script>console.log(' . $evalStr . ')</script>';
-            eval($evalStr);
-            */
-            
-//            $stmt->bind_param($param_type, $params[0], $params[1], $params[2]);
-//                array_push($bindParams, $param_type);
-//                $bindParams = array_merge($bindParams, $params);
-    //        return $bindParams;
-            call_user_func_array(array(stmt, 'bind_param'), $bindParams);
+            $tmp = array();
+            foreach($bindParams as $key => $value) $tmp[$key] = &$bindParams[$key];
+            call_user_func_array(array($stmt, 'bind_param'), $tmp);
           
             if (!$stmt->execute()) {
                 $mysqli->close();
@@ -84,7 +65,7 @@ class MysqliQuery extends ApiBase {
             $stmt->close();
             $mysqli->close();
             
-            if (count($data) == 0 ) {
+            if ( count($data) == 0 ) {
                 $this->errorCode = 999;
                 $this->msg = "Utente o password errati";
             }

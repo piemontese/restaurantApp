@@ -1,73 +1,21 @@
 <?php
 
 require_once('apiBase.php');
+require_once('mysqliQuery.php');
+
+//global $mysqliQuery = new MysqliQuery();
 
 class Authentication extends ApiBase 
 {
 
-    public function adminLogin( $user, $password, $language )
+    static private function executeQuery( array $params, $query )
     {
-        $query = "select auth.Users.user, auth.Users.userType, auth.Users.firstName, auth.Users.lastName, 
-                  auth.Users.email, auth.UserTypeDescription.description as userTypeDescription 
-                  from auth.Users 
-                  left join auth.UserTypeDescription on auth.UserTypeDescription.type = auth.Users.userType 
-                  where auth.Users.user=? 
-                  and auth.Users.password=? 
-                  and auth.UserTypeDescription.language=?";
-        /*
-        if ( !isset($mysqliQuery))
-            $mysqliQuery = new MysqliQuery();
-        return $mysqliQuery->execute(array($user, $password, $language), $query);
-        */
-        
-        $auth = array();
-        $this->errorCode = 0;
-        $this->msg = $php;  //"";
-        try {
-            $mysqli = new mysqli($this->dbserver, $this->dbuser, $this->dbpass);
-            if ($mysqli->connect_errno) {
-                $this->errorCode = $mysqli->connect_errno;
-                $this->msg = $mysqli->error;
-                return $auth;
-            }
-            if (!($stmt = $mysqli->prepare($query))) {
-                $mysqli->close();
-                $this->errorCode = 999;
-                $this->msg = "prepare " . $mysqli->error;
-                return $auth;
-            }        
-          
-            $stmt->bind_param('sss', $user, $password, $language);
-          
-            if (!$stmt->execute()) {
-                $mysqli->close();
-                $this->errorCode = 999;
-                $this->msg = "execute " . $stmt->error;
-                return $auth;
-            } else {
-                $res = $stmt->get_result();
-                while($row = $res->fetch_array(MYSQLI_ASSOC)) {
-                    array_push($auth, $row);
-                }
-
-            }   
-
-            $stmt->close();
-            $mysqli->close();
-            
-            if (count($auth) == 0 ) {
-                $this->errorCode = 999;
-                $this->msg = "Utente o password errati";
-            }
-        } catch (Exception $e) {
-            $this->errorCode = 999;
-            $this->msg = $e->getMessage();
-        }
-
-        return $auth;
-        
-    }
-
+//        if ( !isset($mysqliQuery)) $mysqliQuery = new MysqliQuery();
+        $mysqliQuery = null;
+        $mysqliQuery = new MysqliQuery();
+        return $mysqliQuery->execute($params, $query);
+    }  
+      
     public function userLogin( $user, $password, $language )
     {
       
@@ -78,11 +26,9 @@ class Authentication extends ApiBase
                   where restaurant.Users.user=? 
                   and restaurant.Users.password=? 
                   and restaurant.UserTypeDescription.language=?";
-/*
-        if ( !isset($mysqliQuery))
-            $mysqliQuery = new MysqliQuery();
-        return $mysqliQuery->execute(array($user, $password, $language), $query);
-*/        
+
+//        return $this->executeQuery(array($user, $password, $language), $query);
+        
         
         $auth = array();
         $this->errorCode = 0;
@@ -137,6 +83,67 @@ class Authentication extends ApiBase
         
     }
   
+    public function adminLogin( $user, $password, $language )
+    {
+        $query = "select auth.Users.user, auth.Users.userType, auth.Users.firstName, auth.Users.lastName, 
+                  auth.Users.email, auth.UserTypeDescription.description as userTypeDescription 
+                  from auth.Users 
+                  left join auth.UserTypeDescription on auth.UserTypeDescription.type = auth.Users.userType 
+                  where auth.Users.user=? 
+                  and auth.Users.password=? 
+                  and auth.UserTypeDescription.language=?";
+        
+//        return $this->executeQuery(array($user, $password, $language), $query);
+        
+        
+        $auth = array();
+        $this->errorCode = 0;
+        $this->msg = $php;  //"";
+        try {
+            $mysqli = new mysqli($this->dbserver, $this->dbuser, $this->dbpass);
+            if ($mysqli->connect_errno) {
+                $this->errorCode = $mysqli->connect_errno;
+                $this->msg = $mysqli->error;
+                return $auth;
+            }
+            if (!($stmt = $mysqli->prepare($query))) {
+                $mysqli->close();
+                $this->errorCode = 999;
+                $this->msg = "prepare " . $mysqli->error;
+                return $auth;
+            }        
+          
+            $stmt->bind_param('sss', $user, $password, $language);
+          
+            if (!$stmt->execute()) {
+                $mysqli->close();
+                $this->errorCode = 999;
+                $this->msg = "execute " . $stmt->error;
+                return $auth;
+            } else {
+                $res = $stmt->get_result();
+                while($row = $res->fetch_array(MYSQLI_ASSOC)) {
+                    array_push($auth, $row);
+                }
+
+            }   
+
+            $stmt->close();
+            $mysqli->close();
+            
+            if (count($auth) == 0 ) {
+                $this->errorCode = 999;
+                $this->msg = "Utente o password errati";
+            }
+        } catch (Exception $e) {
+            $this->errorCode = 999;
+            $this->msg = $e->getMessage();
+        }
+
+        return $auth;
+        
+    }
+
     public function userRegister($name,$price)
     {
     }
